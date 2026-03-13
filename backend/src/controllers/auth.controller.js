@@ -17,7 +17,7 @@ const sanitizeUser = (user) => ({
 
 // Register a new user
 export const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isAdmin = false } = req.body;
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -33,6 +33,7 @@ export const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      isAdmin,
     });
 
     // Generate a token
