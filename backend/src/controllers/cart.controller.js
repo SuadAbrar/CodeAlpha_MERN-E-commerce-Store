@@ -49,7 +49,9 @@ export const addToCart = async (req, res) => {
     await cart.save();
 
     const populatedCart = await cart.populate("items.product");
-    res.status(201).json(populatedCart);
+    res
+      .status(201)
+      .json({ message: "Item added to cart", cart: populatedCart });
   } catch (error) {
     console.error("addToCart error", error);
     res.status(500).json({ message: "Server error" });
@@ -82,7 +84,7 @@ export const updateCartItem = async (req, res) => {
     await cart.save();
 
     const populatedCart = await cart.populate("items.product");
-    res.status(200).json(populatedCart);
+    res.status(200).json({ message: "Cart item updated", cart: populatedCart });
   } catch (error) {
     console.error("updateCartItem error", error);
     res.status(500).json({ message: "Server error" });
@@ -115,7 +117,9 @@ export const removeCartItem = async (req, res) => {
     await cart.save();
 
     const populatedCart = await cart.populate("items.product");
-    res.status(200).json(populatedCart);
+    res
+      .status(200)
+      .json({ message: "Item removed from cart", cart: populatedCart });
   } catch (error) {
     console.error("removeCartItem error", error);
     res.status(500).json({ message: "Server error" });
@@ -133,8 +137,7 @@ export const clearCart = async (req, res) => {
     cart.items = [];
     await cart.save();
 
-    const populatedCart = await cart.populate("items.product");
-    res.status(200).json(populatedCart);
+    res.status(200).json({ message: "Cart cleared" });
   } catch (error) {
     console.error("clearCart error", error);
     res.status(500).json({ message: "Server error" });
