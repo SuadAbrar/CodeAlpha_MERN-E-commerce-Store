@@ -1,13 +1,16 @@
-import Cart from "../models/Cart";
+import Cart from "../models/Cart.js";
+import Product from "../models/Product.js";
 
 // Get the current user's cart
 export const getCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user._id }).populate(
-      "items.product",
-    );
+    const cart = await Cart.findOne({ user: req.user._id }).populate({
+      path: "items.product",
+      select: "name price imageUrl",
+    });
+
     if (!cart) {
-      return res.status(404).json({ items: [] }, { message: "Cart not found" });
+      return res.status(404).json({ items: [], message: "Cart not found" });
     }
 
     res.status(200).json(cart);
@@ -88,7 +91,11 @@ export const updateCartItem = async (req, res) => {
 
 // remove an item from the cart
 export const removeCartItem = async (req, res) => {
-  const { productId } = req.body;
+  const productId = req.params.productId || req.body?.productId;
+
+  if (!productId) {
+    return res.status(400).json({ message: "productId is required" });
+  }
 
   try {
     const cart = await Cart.findOne({ user: req.user._id });
@@ -96,9 +103,15 @@ export const removeCartItem = async (req, res) => {
       return res.status(404).json({ message: "Cart not found" });
     }
 
+    const initialLength = cart.items.length;
     cart.items = cart.items.filter(
       (item) => item.product.toString() !== productId,
     );
+
+    if (cart.items.length === initialLength) {
+      return res.status(404).json({ message: "Item not found in cart" });
+    }
+
     await cart.save();
 
     const populatedCart = await cart.populate("items.product");
