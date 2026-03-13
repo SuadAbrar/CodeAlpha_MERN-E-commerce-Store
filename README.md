@@ -372,7 +372,7 @@ Create a `.env` file in the backend folder:
 
 ```
 PORT=5000
-MONGO_URI=MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<database_name>
+MONGO_URI=mongodb://localhost:27017/ecommerce_db
 JWT_SECRET=your_secret_key
 ```
 
