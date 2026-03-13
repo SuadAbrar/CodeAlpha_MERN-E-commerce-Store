@@ -11,6 +11,7 @@ This project demonstrates **professional full-stack architecture**, **RESTful AP
 # 📛 Badges
 
 ### 🖥️ Core Stack
+
 ![Stack](https://img.shields.io/badge/Stack-MERN-3C873A?style=for-the-badge)
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?style=for-the-badge)
 ![Express.js](https://img.shields.io/badge/Backend-Express.js-000000?style=for-the-badge)
@@ -18,15 +19,18 @@ This project demonstrates **professional full-stack architecture**, **RESTful AP
 ![Node.js](https://img.shields.io/badge/Runtime-Node.js-339933?style=for-the-badge)
 
 ### 🎨 UI / UX
+
 ![TailwindCSS](https://img.shields.io/badge/UI-TailwindCSS-38BDF8?style=for-the-badge)
 ![Responsive](https://img.shields.io/badge/Responsive-Design-FF6F61?style=for-the-badge)
 ![Modern UI](https://img.shields.io/badge/UI-Modern%20Interface-8A2BE2?style=for-the-badge)
 
 ### 🔐 Security & Authentication
+
 ![JWT](https://img.shields.io/badge/Auth-JWT-FFB400?style=for-the-badge)
 ![BCrypt](https://img.shields.io/badge/Password-BCrypt-0A66C2?style=for-the-badge)
 
 ### 🧰 Developer Tools
+
 ![Postman](https://img.shields.io/badge/API%20Testing-Postman-F76935?style=for-the-badge)
 ![VSCode](https://img.shields.io/badge/Editor-VSCode-007ACC?style=for-the-badge)
 ![Git](https://img.shields.io/badge/Version%20Control-Git-F1502F?style=for-the-badge)
@@ -36,17 +40,17 @@ This project demonstrates **professional full-stack architecture**, **RESTful AP
 
 # 📑 Table of Contents
 
-- Overview  
-- Key Objectives  
-- Core Features  
-- Technology Stack  
-- System Architecture  
-- Project Structure  
-- Database Design  
-- API Endpoints  
-- Getting Started  
-- Development Roadmap  
-- Future Improvements  
+- Overview
+- Key Objectives
+- Core Features
+- Technology Stack
+- System Architecture
+- Project Structure
+- Database Design
+- API Endpoints
+- Getting Started
+- Development Roadmap
+- Future Improvements
 - License
 
 ---
@@ -134,28 +138,28 @@ Users can complete purchases through a checkout flow:
 
 ## Backend
 
-- Node.js  
-- Express.js  
-- MongoDB  
-- Mongoose  
-- JWT Authentication  
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
 
 ---
 
 ## Frontend
 
-- React.js  
-- TailwindCSS  
-- React Router  
+- React.js
+- TailwindCSS
+- React Router
 - JavaScript (ES6+)
 
 ---
 
 ## Development Tools
 
-- Git & GitHub  
-- Postman (API Testing)  
-- Visual Studio Code  
+- Git & GitHub
+- Postman (API Testing)
+- Visual Studio Code
 
 ---
 
@@ -368,7 +372,7 @@ Create a `.env` file in the backend folder:
 
 ```
 PORT=5000
-MONGO_URI=your_mongodb_connection
+MONGO_URI=MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<database_name>
 JWT_SECRET=your_secret_key
 ```
 
@@ -407,22 +411,26 @@ http://localhost:5173
 # 🛣 Development Roadmap
 
 ### Phase 1 — Backend Foundation
+
 - Express server setup
 - MongoDB connection
 - Authentication system
 
 ### Phase 2 — Product System
+
 - Product API
 - Product listing
 - Product detail page
 
 ### Phase 3 — Cart System
+
 - Add to cart
 - Remove from cart
 - Update quantity
 - Cart state management
 
 ### Phase 4 — Checkout & Orders
+
 - Order creation
 - Order history
 - Backend order storage
