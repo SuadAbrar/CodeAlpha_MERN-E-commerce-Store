@@ -119,7 +119,7 @@ The cart system allows users to:
 - Update product quantities
 - View cart summary and total price
 
-Cart state is managed on the **frontend application layer**.
+Cart state is managed on the **backend** (MongoDB via Cart model) and synchronized with the frontend.
 
 ---
 
@@ -200,11 +200,13 @@ backend/
 │  ├─ controllers/
 │  │   ├─ auth.controller.js
 │  │   ├─ product.controller.js
+│  │   ├─ cart.controller.js
 │  │   └─ order.controller.js
 │  │
 │  ├─ routes/
 │  │   ├─ auth.routes.js
 │  │   ├─ product.routes.js
+│  │   ├─ cart.routes.js
 │  │   └─ order.routes.js
 │  │
 │  ├─ middleware/
@@ -302,6 +304,23 @@ status
 createdAt
 ```
 
+### Cart
+
+```
+Cart
+----
+_id
+user
+items[
+  {
+    product
+    quantity
+  }
+]
+createdAt
+updatedAt
+```
+
 ---
 
 # 🔗 API Endpoints
@@ -318,13 +337,26 @@ POST /api/auth/login
 ```
 GET /api/products
 GET /api/products/:id
+POST /api/products          (auth + admin)
+PUT /api/products/:id      (auth + admin)
+DELETE /api/products/:id   (auth + admin)
+```
+
+## Cart
+
+```
+GET /api/cart              (auth)
+POST /api/cart             (auth)
+PUT /api/cart/:productId   (auth)
+DELETE /api/cart/:productId (auth)
+DELETE /api/cart           (auth)
 ```
 
 ## Orders
 
 ```
-POST /api/orders
-GET /api/orders/my-orders
+POST /api/orders           (auth)
+GET /api/orders/my-orders  (auth)
 ```
 
 ---
