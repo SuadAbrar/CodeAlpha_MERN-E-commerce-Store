@@ -40,7 +40,7 @@ export const createOrder = async (req, res) => {
 };
 
 // get user order history
-export const getUserOrders = async (req, res) => {
+export const getOrders = async (req, res) => {
   try {
     const userId = req.user._id;
     const orders = await Order.find({ user: userId }).populate(
