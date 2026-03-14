@@ -196,6 +196,7 @@ backend/
 │  │   ├─ User.js
 │  │   ├─ Product.js
 │  │   └─ Order.js
+│  │   └─ Cart.js
 │  │
 │  ├─ controllers/
 │  │   ├─ auth.controller.js
@@ -211,10 +212,11 @@ backend/
 │  │
 │  ├─ middleware/
 │  │   └─ auth.middleware.js
+│  │   └─ admin.middleware.js
 │  │
 │  └─ server.js
 │
-├─ .env.example
+├─ .env
 ├─ package.json
 └─ README.md
 ```
