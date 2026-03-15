@@ -12,7 +12,7 @@ export const createProduct = async (productData) => {
 
 export const getProducts = async () => {
   try {
-    const response = await api.get("/");
+    const response = await api.get("/products");
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -22,7 +22,7 @@ export const getProducts = async () => {
 
 export const getProductById = async (id) => {
   try {
-    const response = await api.get(`/${id}`);
+    const response = await api.get(`/products/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching product:", error);

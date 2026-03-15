@@ -233,6 +233,7 @@ frontend/
 │  │   ├─ Navbar.jsx
 │  │   ├─ ProductCard.jsx
 │  │   └─ CartItem.jsx
+│  │   └─ Button.jsx
 │  │
 │  ├─ pages/
 │  │   ├─ Home.jsx
@@ -241,12 +242,18 @@ frontend/
 │  │   ├─ Checkout.jsx
 │  │   ├─ Login.jsx
 │  │   └─ Register.jsx
+│  │   └─ Orders.jsx
 │  │
 │  ├─ context/
 │  │   └─ CartContext.jsx
+│  │   └─ AuthContext.jsx
 │  │
 │  ├─ services/
 │  │   └─ api.js
+│  │   └─ authService.js
+│  │   └─ cartService.js
+│  │   └─ orderService.js
+│  │   └─ productService.js
 │  │
 │  ├─ App.jsx
 │  └─ main.jsx
