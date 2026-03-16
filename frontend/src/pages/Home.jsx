@@ -1,67 +1,21 @@
-import { useState, useEffect } from "react";
-import ProductCard from "../components/ProductCard";
-import { getProducts } from "../services/productService";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchProducts = async () => {
-    try {
-      const data = await getProducts();
-      setProducts(data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <p className="text-base font-medium text-slate-600">
-          Loading products…
-        </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center px-4">
-        <p className="text-base font-medium text-amber-600">
-          Something went wrong while fetching products.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="mx-auto w-full max-w-7xl px-4 pt-10 pb-16 sm:px-6 lg:px-8">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Featured Products
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm text-gray-600">
-            Browse our selection of products. Tap on any item to view details
-            and make it yours.
-          </p>
-        </header>
-
-        <section aria-label="Product grid">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        </section>
+    <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+          Welcome to Our Store
+        </h1>
+        <p className="mt-4 text-lg text-gray-600 sm:text-xl">
+          Discover amazing products and shop with ease.
+        </p>
+        <Link
+          to="/products"
+          className="mt-8 inline-flex items-center justify-center rounded-xl bg-emerald-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
+        >
+          Browse Products
+        </Link>
       </div>
     </main>
   );
