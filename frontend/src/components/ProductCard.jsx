@@ -26,13 +26,15 @@ const ProductCard = ({ product }) => {
           </p>
         </div>
 
-        <Link
-          to={`/products/${product._id}`}
-          aria-label={`View details for ${product.name}`}
-          className="mt-auto inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
-        >
-          View Details
-        </Link>
+        <div className="mt-auto flex gap-3">
+          <Link
+            to={`/products/${product._id}`}
+            aria-label={`View details for ${product.name}`}
+            className="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
+          >
+            View Details
+          </Link>
+        </div>
       </div>
     </article>
   );

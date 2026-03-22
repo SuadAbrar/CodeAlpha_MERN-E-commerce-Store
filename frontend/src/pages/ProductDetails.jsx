@@ -1,12 +1,37 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../services/productService";
+// import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { cart, addItem } = useCart();
+  const { user } = useContext(AuthContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      alert("Please log in to add items to your cart.");
+      return;
+    }
+
+    try {
+      await addItem(product._id, 1);
+      navigate("/cart");
+    } catch (error) {
+      console.error("Add to cart failed:", error);
+      alert(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to add item to cart.",
+      );
+    }
+  };
 
   const fetchProduct = async () => {
     try {
@@ -90,6 +115,7 @@ const ProductDetails = () => {
 
             <div className="flex items-start gap-4">
               <button
+                onClick={handleAddToCart}
                 type="button"
                 className="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
               >

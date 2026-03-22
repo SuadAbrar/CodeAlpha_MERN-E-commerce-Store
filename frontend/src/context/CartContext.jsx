@@ -1,13 +1,15 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import { AuthContext } from "./AuthContext";
+import { createContext, useContext, useState, useEffect } from "react";
 import {
   addToCart,
   getCart,
   updateCartItem,
   removeFromCart,
 } from "../services/cartService";
+import { AuthContext } from "./AuthContext";
 
-export const CartContext = createContext();
+const CartContext = createContext(); // NOT exported directly
+
+export const useCart = () => useContext(CartContext); // custom hook ✅
 
 export const CartProvider = ({ children }) => {
   const { token } = useContext(AuthContext);
@@ -16,10 +18,10 @@ export const CartProvider = ({ children }) => {
   const fetchCart = async () => {
     if (!token) return;
     try {
-      const cartData = await getCart(token);
-      setCart(cartData.items || []);
-    } catch (error) {
-      console.error("Error fetching cart:", error);
+      const data = await getCart(token);
+      setCart(data.items || []);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -27,30 +29,45 @@ export const CartProvider = ({ children }) => {
     fetchCart();
   }, [token]);
 
-  const addItem = async (productId) => {
+  const addItem = async (productId, quantity = 1) => {
+    if (!token) {
+      throw new Error("You must be logged in to add items to the cart.");
+    }
     try {
-      const response = await addToCart(productId, 1, token);
-      setCart(response.items || []);
+      const data = await addToCart(productId, quantity, token);
+      setCart(data.cart.items || []);
+      return data;
     } catch (error) {
       console.error("Error adding to cart:", error);
+      throw error;
     }
   };
 
   const updateItem = async (productId, quantity) => {
+    if (!token) {
+      throw new Error("You must be logged in to update your cart.");
+    }
     try {
-      const response = await updateCartItem(productId, quantity, token);
-      setCart(response.items || []);
+      const data = await updateCartItem(productId, quantity, token);
+      setCart(data.cart.items || []);
+      return data;
     } catch (error) {
       console.error("Error updating cart item:", error);
+      throw error;
     }
   };
 
   const removeItem = async (productId) => {
+    if (!token) {
+      throw new Error("You must be logged in to remove items from cart.");
+    }
     try {
-      const response = await removeFromCart(productId);
-      setCart(response.items || []);
+      const data = await removeFromCart(productId, token);
+      setCart(data.cart.items || []);
+      return data;
     } catch (error) {
       console.error("Error removing from cart:", error);
+      throw error;
     }
   };
 
