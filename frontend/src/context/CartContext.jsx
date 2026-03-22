@@ -7,9 +7,9 @@ import {
 } from "../services/cartService";
 import { AuthContext } from "./AuthContext";
 
-const CartContext = createContext(); // NOT exported directly
+const CartContext = createContext();
 
-export const useCart = () => useContext(CartContext); // custom hook ✅
+export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const { token } = useContext(AuthContext);
