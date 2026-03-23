@@ -22,6 +22,11 @@ export const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ message: "User not found for token" });
     }
 
+    // Check token version for server-side logout invalidation
+    if (decoded.tokenVersion !== user.tokenVersion) {
+      return res.status(401).json({ message: "Invalidated token" });
+    }
+
     req.user = user;
     next();
   } catch (error) {

@@ -2,18 +2,42 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const generateToken = (userId) => {
+const generateToken = (userId, tokenVersion) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not set");
   }
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  return jwt.sign(
+    { id: userId, tokenVersion },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }, // enforce backend session expiration
+  );
 };
 
 const sanitizeUser = (user) => ({
   _id: user._id,
   name: user.name,
   email: user.email,
+  isAdmin: user.isAdmin,
 });
+
+// Logout user by invalidating current token version
+export const logoutUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.tokenVersion += 1;
+    await user.save();
+
+    // Client should remove token from local storage after this
+    res.json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("logoutUser error", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 // Register a new user
 export const registerUser = async (req, res) => {
@@ -37,7 +61,7 @@ export const registerUser = async (req, res) => {
     });
 
     // Generate a token
-    const token = generateToken(user._id);
+    const token = generateToken(user._id, user.tokenVersion);
 
     res.status(201).json({ token, user: sanitizeUser(user) });
   } catch (error) {
@@ -56,8 +80,8 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Generate a token
-    const token = generateToken(user._id);
+    // Generate a token (includes tokenVersion)
+    const token = generateToken(user._id, user.tokenVersion);
     res.json({ token, user: sanitizeUser(user) });
   } catch (error) {
     console.error("loginUser error", error);

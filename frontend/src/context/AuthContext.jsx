@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { logoutUser } from "../services/authService";
 
 export const AuthContext = createContext();
 
@@ -19,11 +20,20 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const logout = async () => {
+    try {
+      if (token) {
+        await logoutUser(token);
+      }
+    } catch (error) {
+      // logout steps can still continue even if backend call fails
+      console.warn("Backend logout failed, clearing local auth state", error);
+    } finally {
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
   };
 
   return (
