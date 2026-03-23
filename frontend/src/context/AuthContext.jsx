@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { logoutUser } from "../services/authService";
+import { setLogoutCallback, setCurrentToken, resetLogoutFlag } from "../utils/helper";
 
 export const AuthContext = createContext();
 
@@ -10,7 +11,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       setUser(JSON.parse(localStorage.getItem("user")));
+      setCurrentToken(token);
     }
+    setLogoutCallback(logout);
   }, [token]);
 
   const login = (userData, token) => {
@@ -18,12 +21,13 @@ export const AuthProvider = ({ children }) => {
     setToken(token);
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
+    setCurrentToken(token);
   };
 
-  const logout = async () => {
+  const logout = async (isTokenExpired = false) => {
     try {
-      if (token) {
-        await logoutUser(token);
+      if (!isTokenExpired) {
+        await logoutUser();
       }
     } catch (error) {
       // logout steps can still continue even if backend call fails
@@ -33,8 +37,14 @@ export const AuthProvider = ({ children }) => {
       setToken(null);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      setCurrentToken(null);
+      resetLogoutFlag();
     }
   };
+
+  useEffect(() => {
+    setLogoutCallback(logout);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>

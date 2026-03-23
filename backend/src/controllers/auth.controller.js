@@ -9,7 +9,7 @@ const generateToken = (userId, tokenVersion) => {
   return jwt.sign(
     { id: userId, tokenVersion },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" }, // enforce backend session expiration
+    { expiresIn: "2d" }, // enforce backend session expiration
   );
 };
 
