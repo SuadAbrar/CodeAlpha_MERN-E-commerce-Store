@@ -5,6 +5,7 @@ import { getProductById } from "../services/productService";
 import { AuthContext } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-hot-toast";
+import Spinner from "../components/Spinner";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -53,7 +54,7 @@ const ProductDetails = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
-        <p className="text-base font-medium text-slate-600">Loading product…</p>
+        <Spinner message="Loading product details..." />
       </div>
     );
   }

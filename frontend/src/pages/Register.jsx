@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { registerUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 const Register = () => {
@@ -68,6 +68,15 @@ const Register = () => {
           Register
         </button>
       </form>
+      <p className="mt-6 text-center text-sm text-slate-600">
+        Already have an account?{' '}
+        <Link
+          to="/login"
+          className="text-emerald-600 font-semibold hover:text-emerald-700"
+        >
+          Login
+        </Link>
+      </p>
     </div>
   );
 };

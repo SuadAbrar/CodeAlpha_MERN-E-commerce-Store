@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { loginUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 const Login = () => {
@@ -53,7 +53,24 @@ const Login = () => {
         >
           Login
         </button>
+        <div className="mt-2 text-right">
+          <Link
+            to="/forgot-password"
+            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+          >
+            Forgot Password?
+          </Link>
+        </div>
       </form>
+      <p className="mt-6 text-center text-sm text-slate-600">
+        Don’t have an account?{' '}
+        <Link
+          to="/register"
+          className="text-emerald-600 font-semibold hover:text-emerald-700"
+        >
+          Register
+        </Link>
+      </p>
     </div>
   );
 };

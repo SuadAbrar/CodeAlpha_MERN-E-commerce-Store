@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getOrders } from "../services/orderService";
 import { AuthContext } from "../context/AuthContext";
+import Spinner from "../components/Spinner";
 
 const Orders = () => {
   const { token } = useContext(AuthContext);
@@ -28,7 +29,11 @@ const Orders = () => {
   }, [token]);
 
   if (loading) {
-    return <div className="text-center py-10">Loading orders...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <Spinner message="Loading your orders..." />
+      </div>
+    );
   }
 
   if (error) {

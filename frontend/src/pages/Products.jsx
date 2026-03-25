@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/productService";
 import ProductCard from "../components/ProductCard";
+import Spinner from "../components/Spinner";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -25,7 +26,7 @@ const Products = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
-        <p>Loading products...</p>
+        <Spinner message="Loading products..." />
       </div>
     );
   }
