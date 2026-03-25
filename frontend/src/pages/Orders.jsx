@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getOrders } from "../services/orderService";
 import { AuthContext } from "../context/AuthContext";
 
@@ -35,7 +36,21 @@ const Orders = () => {
   }
 
   if (orders.length === 0) {
-    return <div className="text-center py-10">You have no orders yet.</div>;
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+        <div className="mb-6 text-7xl">📦</div>
+        <h2 className="text-3xl font-bold text-gray-800">No orders yet</h2>
+        <p className="text-gray-600 mt-2 mb-6 max-w-md">
+          Your orders will appear here once you place them. Start shopping now!
+        </p>
+        <Link
+          to="/products"
+          className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition"
+        >
+          Browse Products
+        </Link>
+      </div>
+    );
   }
 
   const formatDate = (dateString) => {
