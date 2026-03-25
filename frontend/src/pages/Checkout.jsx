@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import { createOrder } from "../services/orderService";
 
 const Checkout = () => {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,7 @@ const Checkout = () => {
         },
         token,
       );
+      clearCart();
       alert("Order placed successfully!");
       navigate("/products");
     } catch (error) {
