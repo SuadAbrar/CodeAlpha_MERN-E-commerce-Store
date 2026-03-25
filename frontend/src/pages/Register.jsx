@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { registerUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,9 +23,10 @@ const Register = () => {
     try {
       const data = await registerUser(form);
       login(data.user, data.token);
+      toast.success("Registration successful");
       navigate("/"); // redirect to home
     } catch (error) {
-      alert(error.response?.data?.message || "Registration failed");
+      toast.error(error.response?.data?.message || "Registration failed");
     }
   };
 

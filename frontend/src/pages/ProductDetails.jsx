@@ -4,6 +4,7 @@ import { getProductById } from "../services/productService";
 // import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import { toast } from "react-hot-toast";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -16,16 +17,17 @@ const ProductDetails = () => {
 
   const handleAddToCart = async () => {
     if (!user) {
-      alert("Please log in to add items to your cart.");
+      toast.error("Please log in to add items to your cart.");
       return;
     }
 
     try {
       await addItem(product._id, 1);
+      toast.success("Product added to cart");
       navigate("/cart");
     } catch (error) {
       console.error("Add to cart failed:", error);
-      alert(
+      toast.error(
         error.response?.data?.message ||
           error.message ||
           "Failed to add item to cart.",

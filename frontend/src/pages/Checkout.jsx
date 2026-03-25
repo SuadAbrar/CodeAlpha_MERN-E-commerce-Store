@@ -3,6 +3,7 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { createOrder } from "../services/orderService";
+import { toast } from "react-hot-toast";
 
 const Checkout = () => {
   const { cart, clearCart } = useCart();
@@ -12,7 +13,7 @@ const Checkout = () => {
 
   const handleCheckout = async () => {
     if (!cart.length) {
-      alert("Your cart is empty.");
+      toast.error("Your cart is empty.");
       return;
     }
     setLoading(true);
@@ -27,11 +28,11 @@ const Checkout = () => {
         token,
       );
       clearCart();
-      alert("Order placed successfully!");
+      toast.success("Order placed successfully!");
       navigate("/products");
     } catch (error) {
       console.error("Checkout failed:", error);
-      alert(
+      toast.error(
         error.response?.data?.message ||
           error.message ||
           "Failed to place order. Please try again.",

@@ -38,22 +38,42 @@ const Orders = () => {
     return <div className="text-center py-10">You have no orders yet.</div>;
   }
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-4xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-gray-900">My Orders</h2>
       <div className="space-y-4">
         {orders.map((order) => (
           <div key={order._id} className="border rounded-xl p-4 mb-4">
-            <p className="font-semibold mb-2">Order ID: {order._id}</p>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-semibold text-gray-700">
+                Order ID: {order._id}
+              </p>
+              <span className="text-sm text-gray-500">
+                {formatDate(order.createdAt)}
+              </span>
+            </div>
+            <p className="text-sm text-emerald-700 mb-3">
+              Status: {order.orderStatus}
+            </p>
 
-            {order.items.map((item) => (
-              <div key={item.product._id} className="flex justify-between">
-                <span>{item.product.name}</span>
-                <span>
-                  {item.quantity} × ${item.product.price}
-                </span>
-              </div>
-            ))}
+            <div className="space-y-2">
+              {order.items.map((item) => (
+                <div key={item.product._id} className="flex justify-between">
+                  <span>{item.product.name}</span>
+                  <span>
+                    {item.quantity} × ${item.product.price.toFixed(2)}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>

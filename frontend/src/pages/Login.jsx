@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { loginUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,9 +18,10 @@ const Login = () => {
     try {
       const data = await loginUser(form);
       login(data.user, data.token);
+      toast.success("Login successful");
       navigate("/"); // redirect to home
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 
