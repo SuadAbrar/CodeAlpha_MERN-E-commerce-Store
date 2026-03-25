@@ -17,7 +17,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // Add response interceptor to handle token expiration
@@ -29,7 +29,7 @@ api.interceptors.response.use(
       triggerLogout();
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;

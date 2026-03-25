@@ -1,6 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import { logoutUser } from "../services/authService";
-import { setLogoutCallback, setCurrentToken, resetLogoutFlag } from "../utils/helper";
+import {
+  setLogoutCallback,
+  setCurrentToken,
+  resetLogoutFlag,
+} from "../utils/helper";
 
 export const AuthContext = createContext();
 
