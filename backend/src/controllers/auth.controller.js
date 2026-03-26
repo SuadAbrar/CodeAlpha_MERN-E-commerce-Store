@@ -20,6 +20,10 @@ const sanitizeUser = (user) => ({
   isAdmin: user.isAdmin,
 });
 
+const isStrongPassword = (password) => {
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(password);
+};
+
 // Logout user by invalidating current token version
 export const logoutUser = async (req, res) => {
   try {
@@ -43,6 +47,14 @@ export const logoutUser = async (req, res) => {
 export const registerUser = async (req, res) => {
   const { name, email, password, isAdmin = false } = req.body;
   try {
+    // Validate password strength
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({
+        message:
+          "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
+      });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {

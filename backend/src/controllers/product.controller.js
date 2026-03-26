@@ -2,7 +2,19 @@ import Product from "../models/Product.js";
 
 // Create a new product
 export const createProduct = async (req, res) => {
-  const { name, description, price, stock, category, imageUrl, brand, rating, numReviews, discountPrice, tags } = req.body;
+  const {
+    name,
+    description,
+    price,
+    stock,
+    category,
+    imageUrl,
+    brand,
+    rating,
+    numReviews,
+    discountPrice,
+    tags,
+  } = req.body;
 
   try {
     const product = new Product({
@@ -51,7 +63,19 @@ export const getProductById = async (req, res) => {
 
 // Update a product by ID
 export const updateProduct = async (req, res) => {
-  const { name, description, price, stock, category, imageUrl, brand, rating, numReviews, discountPrice, tags } = req.body;
+  const {
+    name,
+    description,
+    price,
+    stock,
+    category,
+    imageUrl,
+    brand,
+    rating,
+    numReviews,
+    discountPrice,
+    tags,
+  } = req.body;
 
   try {
     const product = await Product.findByIdAndUpdate(
