@@ -94,6 +94,7 @@ Secure authentication system including:
 - User login
 - Password hashing with **bcrypt**
 - **JWT-based authentication**
+- Strong password requirements (min 8 chars, uppercase, lowercase, number, special character)
 - Protected API routes
 
 ---
@@ -107,6 +108,7 @@ Users can:
 - See pricing and descriptions
 - View product images
 - Check product availability
+- Product metadata includes brand, rating, numReviews, discountPrice, tags
 
 ---
 
@@ -117,6 +119,7 @@ The cart system allows users to:
 - Add products to cart
 - Remove products from cart
 - Update product quantities
+- Clear cart
 - View cart summary and total price
 
 Cart state is managed on the **backend** (MongoDB via Cart model) and synchronized with the frontend.
@@ -212,7 +215,6 @@ backend/
 │  │
 │  ├─ middleware/
 │  │   └─ auth.middleware.js
-│  │   └─ admin.middleware.js
 │  │
 │  └─ server.js
 │
@@ -234,6 +236,9 @@ frontend/
 │  │   ├─ ProductCard.jsx
 │  │   └─ CartItem.jsx
 │  │   └─ Button.jsx
+│  │   └─ Footer.jsx
+│  │   └─ Layout.jsx
+│  │   └─ Spinner.jsx
 │  │
 │  ├─ pages/
 │  │   ├─ Home.jsx
@@ -243,6 +248,7 @@ frontend/
 │  │   ├─ Login.jsx
 │  │   └─ Register.jsx
 │  │   └─ Orders.jsx
+│  │   └─ Products.jsx
 │  │
 │  ├─ context/
 │  │   └─ CartContext.jsx
@@ -254,7 +260,10 @@ frontend/
 │  │   └─ cartService.js
 │  │   └─ orderService.js
 │  │   └─ productService.js
-│  │
+|  |
+│  │─ utils
+|  |   └─ helper.js
+|  |
 │  ├─ App.jsx
 │  └─ main.jsx
 │
@@ -288,9 +297,14 @@ _id
 name
 description
 price
-image
+imageUrl
 category
 stock
+brand
+rating
+numReviews
+discountPrice
+tags
 createdAt
 ```
 
@@ -364,8 +378,11 @@ DELETE /api/cart           (auth)
 ## Orders
 
 ```
-POST /api/orders           (auth)
-GET /api/orders/my-orders  (auth)
+POST /api/orders                    (auth)
+GET /api/orders/my-orders           (auth)
+GET /api/orders                     (auth + admin)
+PUT /api/orders/:orderId/status     (auth + admin)
+PUT /api/orders/:orderId/payment    (auth + admin)
 ```
 
 ---
